@@ -1,0 +1,10 @@
+.Item {
+  flex-grow: 1;
+  background-color: #0c3547;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  &:not(:last-child) {
+    margin-right: 2px;
+  }
+}

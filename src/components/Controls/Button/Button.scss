@@ -1,0 +1,15 @@
+.Button {
+  border: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 10px 20px;
+  background-color: #1abc9c;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:focus {
+    border-color: blue;
+    outline: none;
+  }
+}
