@@ -2,8 +2,8 @@ import React from "react";
 
 import "./Button.scss";
 
-const Button = ({ click, children }) => (
-  <button className="Button" onClick={click}>
+const Button = ({ click, disabled, children }) => (
+  <button className="Button" onClick={click} disabled={disabled}>
     {children}
   </button>
 );

@@ -8,6 +8,11 @@
   font-weight: 500;
   cursor: pointer;
 
+  &[disabled] {
+    opacity: 0.6;
+    cursor: no-drop;
+  }
+
   &:focus {
     border-color: blue;
     outline: none;

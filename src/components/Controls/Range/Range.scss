@@ -1,0 +1,32 @@
+.Range {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  &[disabled] {
+    cursor: no-drop;
+  }
+
+  &_label {
+    margin-right: 10px;
+  }
+
+  &_input {
+    &::-webkit-slider-thumb,
+    &::-webkit-slider-runnable-track {
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb,
+    &::-moz-range-track {
+      cursor: pointer;
+    }
+
+    &::-ms-track,
+    &::-ms-fill-lower,
+    &::-ms-fill-upper,
+    &::-ms-thumb {
+      cursor: pointer;
+    }
+  }
+}

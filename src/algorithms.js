@@ -1,22 +1,68 @@
+const swap = (idx1, idx2, arr) => {
+  [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+};
+
 export const mergeSort = (arr) => {
-  if (arr.length === 1) return arr;
+  const doMerge = (mainArr, auxArr, start, end, animations) => {
+    if (start === end) return;
 
-  const middleIdx = Math.floor(arr.length / 2),
-    left = mergeSort(arr.slice(0, middleIdx)),
-    right = mergeSort(arr.slice(middleIdx));
+    const middle = Math.floor((start + end) / 2);
+    doMerge(auxArr, mainArr, start, middle, animations);
+    doMerge(auxArr, mainArr, middle + 1, end, animations);
 
-  let i = 0,
-    j = 0;
-  const result = [];
+    let pointer1 = start,
+      pointer2 = middle + 1,
+      idx = start;
 
-  while (i < left.length && j < right.length) {
-    if (left[i] < right[j]) result.push(left[i++]);
-    else result.push(right[j++]);
+    while (pointer1 <= middle && pointer2 <= end) {
+      animations.push([[pointer1, pointer2]]);
+      if (auxArr[pointer1] < auxArr[pointer2]) {
+        animations.push([[idx, auxArr[pointer1]]]);
+        mainArr[idx++] = auxArr[pointer1++];
+      } else {
+        animations.push([[idx, auxArr[pointer2]]]);
+        mainArr[idx++] = auxArr[pointer2++];
+      }
+    }
+
+    while (pointer1 <= middle) {
+      animations.push([[pointer1, pointer1]]);
+      animations.push([[idx, auxArr[pointer1]]]);
+      mainArr[idx++] = auxArr[pointer1++];
+    }
+
+    while (pointer2 <= end) {
+      animations.push([[pointer2, pointer2]]);
+      animations.push([[idx, auxArr[pointer2]]]);
+      mainArr[idx++] = auxArr[pointer2++];
+    }
+
+    return animations;
+  };
+
+  return doMerge(arr, [...arr], 0, arr.length - 1, []);
+};
+
+export const bubbleSort = (arr) => {
+  const animations = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    let swapped = false;
+    for (let j = 1; j < arr.length - i; j++) {
+      animations.push([[j - 1, j]]);
+
+      if (arr[j - 1] > arr[j]) {
+        swapped = true;
+        animations.push([
+          [j, arr[j - 1]],
+          [j - 1, arr[j]],
+        ]);
+        swap(j - 1, j, arr);
+      } else animations.push([[j, arr[j]]]);
+    }
+
+    if (swapped === false) break;
   }
 
-  while (i < left.length) result.push(left[i++]);
-
-  while (j < right.length) result.push(right[j++]);
-
-  return result;
+  return animations;
 };

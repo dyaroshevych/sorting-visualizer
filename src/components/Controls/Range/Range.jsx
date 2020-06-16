@@ -1,13 +1,27 @@
-import React from 'react';
+import React from "react";
 
-import './Range.scss';
+import "./Range.scss";
 
-const Range = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+const Range = ({ changeRange, min, max, current, disabled }) => {
+  const handleChange = (event) => changeRange(event.target.value);
+
+  return (
+    <div className="Range">
+      <label htmlFor="range" className="Range_label">
+        Sorting speed and elements count:
+      </label>
+      <input
+        className="Range_input"
+        id="range"
+        type="range"
+        min={min}
+        max={max}
+        value={current}
+        step={1}
+        onChange={handleChange}
+        disabled={disabled}
+      />
+    </div>
+  );
 };
-
 export default Range;
