@@ -5,7 +5,11 @@
   border-top-right-radius: 5px;
 
   &[highlighted="true"] {
-    background-color: purple;
+    background-color: #800080;
+  }
+
+  &[sorted="true"] {
+    background-color: #1abc9c;
   }
 
   &:not(:last-child) {

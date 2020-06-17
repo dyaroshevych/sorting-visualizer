@@ -1,5 +1,5 @@
 import React from "react";
-import { mergeSort, bubbleSort } from "../../algorithms";
+import { mergeSort, bubbleSort, quickSort } from "../../algorithms";
 
 import { Controls, Items } from "../";
 
@@ -18,16 +18,17 @@ class Layout extends React.Component {
   constructor() {
     super();
 
-    const items = this.generateArray(ITEMS_DEFAULT_LENGTH);
+    const [items, maxItem] = this.generateArray(ITEMS_DEFAULT_LENGTH);
 
     this.state = {
       items,
+      maxItem,
+      iterations: 0,
       length: ITEMS_DEFAULT_LENGTH,
       speed: DEFAULT_SORTING_SPEED,
-      maxItem: Math.max(...items),
-      range: [...VALUES_RANGE],
       highlighted: new Set(),
       isSorting: false,
+      isSorted: false,
     };
   }
 
@@ -37,14 +38,18 @@ class Layout extends React.Component {
     for (let i = 0; i < items.length; i++)
       items[i] = generateRandomInRange(...VALUES_RANGE);
 
-    return items;
+    return [items, Math.max(...items)];
   };
 
   // reset an array
   resetArray = () => {
+    const [items, maxItem] = this.generateArray(this.state.length);
     this.setState({
-      items: this.generateArray(this.state.length),
+      items,
+      maxItem,
       highlighted: new Set(),
+      isSorted: false,
+      iterations: 0,
     });
   };
 
@@ -52,6 +57,7 @@ class Layout extends React.Component {
   animate = (animations) => {
     for (let i = 0; i < animations.length; i++) {
       if (i % 2 === 0) {
+        // if the index of animation is even, highlight the given pair of items
         setTimeout(() => {
           const highlighted = new Set();
           for (let animation of animations[i]) {
@@ -59,9 +65,10 @@ class Layout extends React.Component {
             highlighted.add(animation[1]);
           }
 
-          this.setState({ highlighted });
+          this.setState({ highlighted, iterations: this.state.iterations + 1 });
         }, this.state.speed * i);
       } else {
+        // if the index of animation is odd, place the given value into a cell with the given index
         setTimeout(() => {
           const items = [...this.state.items];
 
@@ -77,15 +84,29 @@ class Layout extends React.Component {
 
   // run a sorting algorithm
   sort = (type) => {
-    this.setState({ isSorting: true });
+    this.setState({ isSorting: true, isSorted: false, iterations: 0 });
 
     let animations = [];
 
-    if (type === "merge") animations = mergeSort([...this.state.items]);
-    else if (type === "bubble") animations = bubbleSort([...this.state.items]);
+    // get an array of animations depending on sorting algorithm
+    switch (type) {
+      case "merge":
+        animations = mergeSort([...this.state.items]);
+        break;
+      case "bubble":
+        animations = bubbleSort([...this.state.items]);
+        break;
+      case "quick":
+        animations = quickSort([...this.state.items]);
+        break;
 
+      default:
+    }
+
+    // perform given animations
     this.animate(animations);
 
+    // when all animations are displayed, enable buttons and highlight all items
     setTimeout(() => {
       const highlighted = new Set();
 
@@ -93,10 +114,11 @@ class Layout extends React.Component {
         highlighted.add(i);
       }
 
-      this.setState({ isSorting: false, highlighted });
+      this.setState({ isSorting: false, highlighted, isSorted: true });
     }, this.state.speed * animations.length + this.state.speed);
   };
 
+  // when the array range is changed, reset the array with an updated length
   handleRangeChange = (value) => {
     this.setState(
       {
@@ -112,6 +134,7 @@ class Layout extends React.Component {
   render() {
     return (
       <div className="Layout">
+        <h1>Sorting Visualizer</h1>
         <Controls
           range={[ITEMS_MIN_LENGTH, ITEMS_MAX_LENGTH]}
           changeRange={this.handleRangeChange}
@@ -120,10 +143,12 @@ class Layout extends React.Component {
           reset={this.resetArray}
           isSorting={this.state.isSorting}
         />
+        <span>Iterations count: {this.state.iterations}</span>
         <Items
           items={this.state.items}
           max={this.state.maxItem}
           highlighted={this.state.highlighted}
+          isSorted={this.state.isSorted}
         />
       </div>
     );

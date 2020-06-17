@@ -20,15 +20,20 @@ const Controls = ({
       changeRange={changeRange}
       disabled={isSorting}
     />
-    <Button click={() => sort("merge")} disabled={isSorting}>
-      Merge Sort
-    </Button>
-    <Button click={() => sort("bubble")} disabled={isSorting}>
-      Bubble Sort
-    </Button>
-    <Button click={reset} disabled={isSorting}>
-      Reset Numbers
-    </Button>
+    <div className="Controls_buttons">
+      <Button click={() => sort("merge")} disabled={isSorting}>
+        Merge Sort
+      </Button>
+      <Button click={() => sort("bubble")} disabled={isSorting}>
+        Bubble Sort
+      </Button>
+      <Button click={() => sort("quick")} disabled={isSorting}>
+        Quick Sort
+      </Button>
+      <Button click={reset} disabled={isSorting} color="red">
+        Reset Numbers
+      </Button>
+    </div>
   </div>
 );
 

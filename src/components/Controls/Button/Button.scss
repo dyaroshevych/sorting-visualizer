@@ -3,7 +3,7 @@
   border: 1px solid transparent;
   border-radius: 3px;
   padding: 10px 20px;
-  background-color: #1abc9c;
+  background-color: #0c3547;
   color: #fff;
   font-weight: 500;
   cursor: pointer;
@@ -11,6 +11,10 @@
   &[disabled] {
     opacity: 0.6;
     cursor: no-drop;
+  }
+
+  &[color="red"] {
+    background-color: rgb(180, 16, 16);
   }
 
   &:focus {

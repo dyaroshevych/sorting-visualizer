@@ -2,11 +2,12 @@ import React, { memo } from "react";
 
 import "./Item.scss";
 
-const Item = ({ val, max, highlighted }) => (
+const Item = ({ val, max, highlighted, itemsSorted }) => (
   <div
     className="Item"
     style={{ height: `${(val * 98) / max}%` }}
     highlighted={String(highlighted)}
+    sorted={String(itemsSorted)}
   ></div>
 );
 

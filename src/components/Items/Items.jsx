@@ -4,7 +4,7 @@ import { Item } from ".";
 
 import "./Items.scss";
 
-const Items = ({ items, max, highlighted }) => (
+const Items = ({ items, max, highlighted, isSorted }) => (
   <div className="Items">
     {items.map((val, idx) => {
       return (
@@ -13,6 +13,7 @@ const Items = ({ items, max, highlighted }) => (
           max={max}
           key={val * 100 + Math.random() * 100}
           highlighted={highlighted.has(idx)}
+          itemsSorted={isSorted}
         />
       );
     })}

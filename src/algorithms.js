@@ -66,3 +66,31 @@ export const bubbleSort = (arr) => {
 
   return animations;
 };
+
+export const quickSort = (arr) => {
+  const animations = [];
+
+  const move = (start, end) => {
+    if (start >= end) return;
+
+    let partitionIdx = start;
+
+    for (let i = start; i <= end; i++) {
+      animations.push([[i, partitionIdx]]);
+      if (arr[i] <= arr[end]) {
+        animations.push([
+          [i, arr[partitionIdx]],
+          [partitionIdx, arr[i]],
+        ]);
+        swap(i, partitionIdx++, arr);
+      } else animations.push([[i, arr[i]]]);
+    }
+
+    move(start, partitionIdx - 2);
+    move(partitionIdx, end);
+  };
+
+  move(0, arr.length - 1);
+
+  return animations;
+};
