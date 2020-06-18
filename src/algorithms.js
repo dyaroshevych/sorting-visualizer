@@ -110,6 +110,11 @@ export const insertionSort = (arr) => {
       swap(idx, idx + 1, arr);
       idx--;
     }
+
+    if (idx === i - 1) {
+      animations.push([idx, idx + 1]);
+      animations.push([[idx, arr[idx]]]);
+    }
   }
 
   return animations;
