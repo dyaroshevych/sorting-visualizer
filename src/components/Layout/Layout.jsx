@@ -1,13 +1,21 @@
 import React from "react";
-import { mergeSort, bubbleSort, quickSort } from "../../algorithms";
+import {
+  mergeSort,
+  bubbleSort,
+  quickSort,
+  insertionSort,
+} from "../../algorithms";
 
 import { Controls, Items } from "../";
 
 import "./Layout.scss";
 
 const ITEMS_MIN_LENGTH = 10;
-const ITEMS_DEFAULT_LENGTH = 50;
 const ITEMS_MAX_LENGTH = 100;
+const ITEMS_DEFAULT_LENGTH = Math.min(
+  Math.floor(window.innerHeight / 20),
+  ITEMS_MAX_LENGTH
+);
 const VALUES_RANGE = [10, 100];
 const DEFAULT_SORTING_SPEED = 10;
 
@@ -59,11 +67,7 @@ class Layout extends React.Component {
       if (i % 2 === 0) {
         // if the index of animation is even, highlight the given pair of items
         setTimeout(() => {
-          const highlighted = new Set();
-          for (let animation of animations[i]) {
-            highlighted.add(animation[0]);
-            highlighted.add(animation[1]);
-          }
+          const highlighted = new Set(animations[i]);
 
           this.setState({ highlighted, iterations: this.state.iterations + 1 });
         }, this.state.speed * i);
@@ -98,6 +102,10 @@ class Layout extends React.Component {
         break;
       case "quick":
         animations = quickSort([...this.state.items]);
+        break;
+
+      case "insertion":
+        animations = insertionSort([...this.state.items]);
         break;
 
       default:
@@ -136,6 +144,7 @@ class Layout extends React.Component {
       <div className="Layout">
         <h1>Sorting Visualizer</h1>
         <Controls
+          iterationsCount={this.state.iterations}
           range={[ITEMS_MIN_LENGTH, ITEMS_MAX_LENGTH]}
           changeRange={this.handleRangeChange}
           arrayLength={this.state.length}
@@ -143,7 +152,6 @@ class Layout extends React.Component {
           reset={this.resetArray}
           isSorting={this.state.isSorting}
         />
-        <span>Iterations count: {this.state.iterations}</span>
         <Items
           items={this.state.items}
           max={this.state.maxItem}

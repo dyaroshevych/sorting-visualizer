@@ -1,13 +1,75 @@
+@import "../../index.scss";
+
 .Controls {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+
+  &_stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .Button {
+      margin-top: 10px;
+    }
+  }
 
   &_buttons {
+    margin-left: 20px;
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 
-    .Button:not(:last-of-type) {
-      margin-right: 10px;
+    @include mobile-md {
+      width: 300px;
+      flex-direction: row;
+    }
+
+    @include tablet-lg {
+      display: block;
+      width: 490px;
+    }
+
+    .Button {
+      width: 100%;
+
+      &:not(:first-of-type) {
+        margin-top: 10px;
+      }
+
+      @include mobile-md {
+        width: calc(50% - 5px);
+
+        &:not(:first-of-type) {
+          margin-top: 0;
+        }
+
+        &:nth-of-type(odd) {
+          margin-right: 10px;
+        }
+
+        &:nth-of-type(n + 3) {
+          margin-top: 10px;
+        }
+      }
+
+      @include tablet-lg {
+        width: fit-content;
+
+        &:nth-of-type(odd) {
+          margin-right: 0;
+        }
+
+        &:nth-of-type(n + 3) {
+          margin-top: 0;
+        }
+
+        &:not(:last-of-type) {
+          margin-right: 10px;
+        }
+      }
     }
   }
 }

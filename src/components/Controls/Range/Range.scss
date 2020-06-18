@@ -1,17 +1,29 @@
+@import "../../../index.scss";
+
 .Range {
-  display: flex;
-  align-items: center;
   margin-bottom: 10px;
 
   &[disabled] {
     cursor: no-drop;
   }
 
+  @include mobile-lg {
+    display: flex;
+    align-items: center;
+  }
+
   &_label {
-    margin-right: 10px;
+    display: block;
+    margin-bottom: 5px;
+
+    @include mobile-lg {
+      display: inline-block;
+      margin-right: 5px;
+    }
   }
 
   &_input {
+    width: 100px;
     &::-webkit-slider-thumb,
     &::-webkit-slider-runnable-track {
       cursor: pointer;

@@ -8,7 +8,7 @@ const Range = ({ changeRange, min, max, current, disabled }) => {
   return (
     <div className="Range">
       <label htmlFor="range" className="Range_label">
-        Sorting speed and elements count:
+        Number of elements:
       </label>
       <input
         className="Range_input"

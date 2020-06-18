@@ -15,7 +15,7 @@ export const mergeSort = (arr) => {
       idx = start;
 
     while (pointer1 <= middle && pointer2 <= end) {
-      animations.push([[pointer1, pointer2]]);
+      animations.push([pointer1, pointer2]);
       if (auxArr[pointer1] < auxArr[pointer2]) {
         animations.push([[idx, auxArr[pointer1]]]);
         mainArr[idx++] = auxArr[pointer1++];
@@ -26,13 +26,13 @@ export const mergeSort = (arr) => {
     }
 
     while (pointer1 <= middle) {
-      animations.push([[pointer1, pointer1]]);
+      animations.push([pointer1, pointer1]);
       animations.push([[idx, auxArr[pointer1]]]);
       mainArr[idx++] = auxArr[pointer1++];
     }
 
     while (pointer2 <= end) {
-      animations.push([[pointer2, pointer2]]);
+      animations.push([pointer2, pointer2]);
       animations.push([[idx, auxArr[pointer2]]]);
       mainArr[idx++] = auxArr[pointer2++];
     }
@@ -49,7 +49,7 @@ export const bubbleSort = (arr) => {
   for (let i = 0; i < arr.length; i++) {
     let swapped = false;
     for (let j = 1; j < arr.length - i; j++) {
-      animations.push([[j - 1, j]]);
+      animations.push([j - 1, j]);
 
       if (arr[j - 1] > arr[j]) {
         swapped = true;
@@ -76,7 +76,7 @@ export const quickSort = (arr) => {
     let partitionIdx = start;
 
     for (let i = start; i <= end; i++) {
-      animations.push([[i, partitionIdx]]);
+      animations.push([i, partitionIdx]);
       if (arr[i] <= arr[end]) {
         animations.push([
           [i, arr[partitionIdx]],
@@ -91,6 +91,26 @@ export const quickSort = (arr) => {
   };
 
   move(0, arr.length - 1);
+
+  return animations;
+};
+
+export const insertionSort = (arr) => {
+  const animations = [];
+
+  for (let i = 1; i < arr.length; i++) {
+    let idx = i - 1;
+    while (idx >= 0 && arr[idx] > arr[idx + 1]) {
+      animations.push([idx, idx + 1]);
+      animations.push([
+        [idx, arr[idx + 1]],
+        [idx + 1, arr[idx]],
+      ]);
+
+      swap(idx, idx + 1, arr);
+      idx--;
+    }
+  }
 
   return animations;
 };

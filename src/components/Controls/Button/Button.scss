@@ -1,8 +1,10 @@
+@import "../../../index.scss";
+
 .Button {
   border: none;
   border: 1px solid transparent;
   border-radius: 3px;
-  padding: 10px 20px;
+  padding: 10px;
   background-color: #0c3547;
   color: #fff;
   font-weight: 500;
@@ -20,5 +22,9 @@
   &:focus {
     border-color: blue;
     outline: none;
+  }
+
+  @include mobile-md {
+    padding: 10px 20px;
   }
 }

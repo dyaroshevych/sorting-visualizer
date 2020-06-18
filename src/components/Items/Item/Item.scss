@@ -1,3 +1,5 @@
+@import "../../../index.scss";
+
 .Item {
   flex-grow: 1;
   background-color: #0c3547;
@@ -13,6 +15,12 @@
   }
 
   &:not(:last-child) {
-    margin-right: 2px;
+    margin-right: 1px;
+  }
+
+  @include mobile-lg {
+    &:not(:last-child) {
+      margin-right: 2px;
+    }
   }
 }
